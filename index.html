@@ -25,6 +25,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            opacity: 1;
+            transition: opacity 260ms ease;
+        }
+
+        .container.is-fading {
+            opacity: 0;
         }
 
         h1 {
@@ -107,6 +113,12 @@
             margin-bottom: 15px;
             border-radius: 10px;
         }
+        .gift-header-img {
+            width: 360px;        
+            height: auto;
+            margin-bottom: 8px;
+            opacity: 0.95;
+        }
     </style>
 </head>
 <body>
@@ -123,6 +135,22 @@
     <!-- <div class="footer">From <span id="from">Zion</span> to <span id="to">Cat</span> 💕</div> -->
 
     <script>
+        function setContainerHTML(html, afterSwap) {
+            // fade out
+            container.classList.add('is-fading');
+
+            // wait for fade-out to finish, then swap + fade in
+            setTimeout(() => {
+                container.innerHTML = html;
+
+                // let the browser paint the new DOM before fading in
+                requestAnimationFrame(() => {
+                container.classList.remove('is-fading');
+                if (typeof afterSwap === 'function') afterSwap();
+                });
+            }, 260); // match CSS duration
+            }
+
         const yesBtn = document.getElementById('yesBtn');
         const noBtn = document.getElementById('noBtn');
         const container = document.querySelector('.container');
@@ -137,17 +165,19 @@
         });
 
         yesBtn.addEventListener('click', () => {
-            container.innerHTML = `
+            setContainerHTML(`
                 <h1>Knew you would say yes, I love you c:</h1>
                 <div class="gif">
                     <img src="media/360w.gif" alt="Love gif">
                 </div>
                 <button id="nextBtn">Next ➜</button>
-            `;
+            `, () => {
             document.getElementById('nextBtn').addEventListener('click', showGiftPage);
+            });
         });
         function showGiftPage() {
-            container.innerHTML = `
+            setContainerHTML(`
+                <img src="media/12.png" class="gift-header-img" alt="Gift header">
                 <h1>Pick a gift, sweetiepookiebear</h1>
 
                 <div class="gift-grid">
@@ -155,7 +185,7 @@
                     <img src="media/430w.gif" class="gift" onclick="openGift(2)">
                     <img src="media/430w.gif" class="gift" onclick="openGift(3)">
                 </div>
-            `;
+            `);
         }
 
         function openGift(num) {
@@ -178,35 +208,35 @@
 
             // flowers
             if (num === 2) {
-                container.innerHTML = `
+                setContainerHTML(`
                     <div class="flower-page">
                         <img src="${gift.gif}" class="flower-img">
                         <p class="flower-caption">${gift.text}</p>
                         <button onclick="showGiftPage()">⬅ Back</button>
                     </div>
-                `;
+                `);
                 return;
             }
 
             if (num === 3) {
-                container.innerHTML = `
+                setContainerHTML(`
                     <div class="letter-page">
                         <img src="${gift.gif}" class="letter-img">
                         <button onclick="showGiftPage()">⬅ Back</button>
                     </div>
-                `;
+                `);
                 return;
             }
 
 
             // Default 
-            container.innerHTML = `
+            setContainerHTML(`
                 <h1>${gift.text}</h1>
                 <div class="gif">
                     <img src="${gift.gif}">
                 </div>
                 <button onclick="showGiftPage()">⬅ Back</button>
-            `;
+            `);
         }
     </script>
 </body>
