@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preload" as="image" href="https://litter.catbox.moe/q77jia1o7cobs9dp.png">
+    <link rel="preload" as="image" href="https://litter.catbox.moe/4lwegz6vcd4g0m4b.jpg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentine's Day</title>
@@ -18,6 +20,10 @@
 
         .container {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         h1 {
@@ -63,11 +69,48 @@
             color: #ff6b6b;
             font-size: 1.2em;
         }
+        .gift-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .gift {
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            border-radius: 15px;
+            transition: transform 0.2s;
+        }
+
+        .gift:hover {
+            transform: scale(1.1);
+        }
+
+        .gif img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .letter-page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        }
+
+        .letter-img {
+            max-width: 90vw;
+            max-height: 75vh;
+            object-fit: contain;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Cat, Will you be my valentine? 💙</h1>
+        <h1>Cat, will you be my valentine? 💙</h1>
         <div class="gif">
             <img src="media/VM1fcpu2bKs1e2Kdbj/237w.gif" alt="Cute gif">
         </div>
@@ -98,8 +141,72 @@
                 <div class="gif">
                     <img src="media/VM1fcpu2bKs1e2Kdbj/360w.gif" alt="Love gif">
                 </div>
+                <button id="nextBtn">Next ➜</button>
             `;
+            document.getElementById('nextBtn').addEventListener('click', showGiftPage);
         });
+        function showGiftPage() {
+            container.innerHTML = `
+                <h1>Pick a gift, sweetiepookiebear</h1>
+
+                <div class="gift-grid">
+                    <img src="media/VM1fcpu2bKs1e2Kdbj/430w.gif" class="gift" onclick="openGift(1)">
+                    <img src="media/VM1fcpu2bKs1e2Kdbj/430w.gif" class="gift" onclick="openGift(2)">
+                    <img src="media/VM1fcpu2bKs1e2Kdbj/430w.gif" class="gift" onclick="openGift(3)">
+                </div>
+            `;
+        }
+
+        function openGift(num) {
+            const gifts = {
+                1: {
+                    text: "+20 doubloons for being super great and awesome and pretty and cute and amazing and and funny and smart and incredible and breathtaking and stunning and dazzling and extraordinary and magnificent and splendid and glorious and marvelous and sensational and remarkable and mine.",
+                    gif: "media/VM1fcpu2bKs1e2Kdbj/300w.gif"
+                },
+                2: {
+                    text: "Flowers ofc.",
+                    gif: "https://litter.catbox.moe/q77jia1o7cobs9dp.png"
+                },
+                3: {
+                    text: "",
+                    gif: "https://litter.catbox.moe/4lwegz6vcd4g0m4b.jpg"
+                }
+            };
+
+            const gift = gifts[num];
+
+            // flowers
+            if (num === 2) {
+                container.innerHTML = `
+                    <div class="flower-page">
+                        <img src="${gift.gif}" class="flower-img">
+                        <p class="flower-caption">${gift.text}</p>
+                        <button onclick="showGiftPage()">⬅ Back</button>
+                    </div>
+                `;
+                return;
+            }
+
+            if (num === 3) {
+                container.innerHTML = `
+                    <div class="letter-page">
+                        <img src="${gift.gif}" class="letter-img">
+                        <button onclick="showGiftPage()">⬅ Back</button>
+                    </div>
+                `;
+                return;
+            }
+
+
+            // Default 
+            container.innerHTML = `
+                <h1>${gift.text}</h1>
+                <div class="gif">
+                    <img src="${gift.gif}">
+                </div>
+                <button onclick="showGiftPage()">⬅ Back</button>
+            `;
+        }
     </script>
 </body>
 </html>
