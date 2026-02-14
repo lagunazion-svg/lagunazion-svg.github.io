@@ -1,9 +1,105 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Hello</title>
-  </head>
-  <body>
-    <h1>wow</h1>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day</title>
+    <style>
+        body {
+            background-color: #778da9;
+            font-family: 'Comic Sans MS', cursive;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #0d1b2a;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2em;
+            position: relative;
+        }
+
+        #yesBtn {
+            background-color: #97cdff;
+            color: white;
+            z-index: 2;
+        }
+
+        #noBtn {
+            background-color: #ff6b6b;
+            color: white;
+            z-index: 1;
+        }
+
+        .gif {
+            margin: 20px 0;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            color: #ff6b6b;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cat, Will you be my valentine? 💙</h1>
+        <div class="gif">
+            <img src="media/VM1fcpu2bKs1e2Kdbj/237w.gif" alt="Cute gif">
+        </div>
+        <div class="buttons">
+            <button id="yesBtn">Yes!</button>
+            <button id="noBtn">No >:(</button>
+        </div>
+    </div>
+    <!-- <div class="footer">From <span id="from">Zion</span> to <span id="to">Cat</span> 💕</div> -->
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const container = document.querySelector('.container');
+        let yesBtnSize = 1;
+        let noBtnSize = 1;
+
+        noBtn.addEventListener('click', () => {
+            yesBtnSize *= 1.25;
+            yesBtn.style.transform = `scale(${yesBtnSize})`;
+            noBtnSize -= 0.1;
+            noBtn.style.transform = `scale(${noBtnSize})`;
+        });
+
+        yesBtn.addEventListener('click', () => {
+            container.innerHTML = `
+                <h1>Knew you would say yes, I love you c:</h1>
+                <div class="gif">
+                    <img src="media/VM1fcpu2bKs1e2Kdbj/360w.gif" alt="Love gif">
+                </div>
+            `;
+        });
+    </script>
+</body>
 </html>
